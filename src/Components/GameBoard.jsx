@@ -6,29 +6,14 @@ import { FinalScore } from "./FinalScore";
 // ! Do not add props to gameboard
 export const GameBoard = () => {
   const [answerInput, setAnswerInput] = useState("");
-  const [currIndex, setCurrIndex] = useState(0);
 
   const {
-    correctCount,
-    setCorrectCount,
-    incorrectCount,
-    setIncorrectCount,
-    setOptionsLeft,
+    currIndex,
     optionsLeft,
     initialFishes,
+    setCurrIndex,
+    processFishGuess,
   } = useAppContext();
-
-  const setScoreBoard = () => {
-    if (answerInput === initialFishes[currIndex].name) {
-      setCorrectCount(correctCount + 1);
-      console.log(correctCount);
-    } else {
-      setIncorrectCount(incorrectCount + 1);
-    }
-    setOptionsLeft(
-      optionsLeft.filter((fish) => fish !== initialFishes[currIndex].name)
-    );
-  };
 
   return (
     <div>
@@ -49,7 +34,7 @@ export const GameBoard = () => {
                 setCurrIndex(currIndex + 1);
                 e.preventDefault();
                 setAnswerInput("");
-                setScoreBoard();
+                processFishGuess(answerInput);
               }}
             >
               <label htmlFor="fish-guess">What kind of fish is this?</label>
